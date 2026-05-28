@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+.env
+.env.local
+.env.*.local
+*.log
+uploads
+data
+*.db
+dev.db
+coverage
+dist
+build
+.agents
+.claude
+skills-lock.json

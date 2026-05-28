@@ -17,6 +17,11 @@ export default defineConfig({
     // No se debe poner "url" aquí (causa error de tipos en Prisma actual).
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    // Docker image builds may run `prisma generate` before Railway injects runtime
+    // variables. Prisma does not connect during generate, so a valid placeholder
+    // keeps builds deterministic while real deployments still use DATABASE_URL.
+    url:
+      process.env["DATABASE_URL"] ||
+      "postgresql://postgres:postgres@localhost:5432/pront_revisor?schema=public",
   },
 });
