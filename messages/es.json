@@ -1,0 +1,187 @@
+{
+  "app": {
+    "title": "PRONT Revisor",
+    "subtitle": "Sistema Inteligente de Evaluación de Tesis",
+    "version": "v4.8",
+    "poweredBy": "GROK-POWERED"
+  },
+  "nav": {
+    "dashboard": "Panel de Control",
+    "upload": "Cargar Avance",
+    "review": "Revisión Inteligente",
+    "pattern": "Documento Patrón",
+    "bulk": "Revisión por Lotes",
+    "reports": "Reportes & Export",
+    "users": "Gestión de Usuarios",
+    "logout": "Cerrar Sesión"
+  },
+  "roles": {
+    "estudiante": "Estudiante",
+    "asesor": "Asesor",
+    "coordinador": "Coordinador",
+    "admin": "Administrador"
+  },
+  "common": {
+    "search": "Buscar avances, estudiantes...",
+    "notifications": "Notificaciones",
+    "new": "nuevas",
+    "save": "Guardar Revisión",
+    "cancel": "Cancelar",
+    "download": "Descargar",
+    "analyze": "Analizar con Grok",
+    "reanalyze": "Re-analizar",
+    "exportPDF": "Exportar Acta Oficial",
+    "loading": "Procesando...",
+    "success": "Éxito",
+    "error": "Error",
+    "warning": "Advertencia"
+  },
+  "dashboard": {
+    "title": "Panel de Control",
+    "welcome": "Bienvenido de nuevo. Aquí tienes un resumen del estado de las tesis.",
+    "kpi": {
+      "pending": "Pendientes",
+      "inReview": "En Revisión",
+      "approved": "Aprobados",
+      "avgScore": "Promedio IA",
+      "avgTime": "Tiempo Promedio"
+    },
+    "recentAdvances": "Avances Recientes",
+    "viewAll": "Ver todos",
+    "distribution": "Distribución de Estados",
+    "last30Days": "Últimos 30 días",
+    "realTime": "EN TIEMPO REAL",
+    "scoreEvolution": "Evolución de Puntajes",
+    "comparison": "Comparativa IA vs Revisión Humana",
+    "iaGrok": "IA Grok",
+    "human": "Humana"
+  },
+  "upload": {
+    "title": "Carga de Avances",
+    "description": "Sube tu documento de avance de tesis (PDF o DOCX recomendado)",
+    "selectFile": "Seleccionar Archivo",
+    "thesisTitle": "Título de la Tesis",
+    "thesisTitlePlaceholder": "Ej: Impacto de la Inteligencia Artificial en la Personalización del Aprendizaje",
+    "uploadButton": "Subir y Analizar",
+    "uploading": "Subiendo documento...",
+    "success": "Documento recibido. Iniciando análisis con Grok-IA..."
+  },
+  "review": {
+    "title": "Revisión Inteligente",
+    "analyzing": "Analizando con Grok-IA",
+    "noAnalysis": "No hay análisis disponible",
+    "noAnalysisDesc": "Este avance aún no ha sido procesado por la IA. Inicia el análisis para obtener retroalimentación detallada.",
+    "startAnalysis": "Iniciar Análisis con Grok",
+    "overallScore": "Cumplimiento General",
+    "finalGrade": "Nota Final",
+    "level": "Nivel Estimado",
+    "tabs": {
+      "ia": "Análisis IA",
+      "human": "Revisión Humana"
+    },
+    "findings": "Hallazgos Principales",
+    "strengths": "Fortalezas",
+    "recommendations": "Recomendaciones",
+    "humanComments": "Comentarios del Revisor Humano",
+    "humanCommentsPlaceholder": "Escribe aquí tus observaciones, ajustes o recomendaciones adicionales...",
+    "finalStatus": "Estado Final",
+    "adjustedScore": "Puntaje Ajustado",
+    "saveReview": "Guardar Revisión Humana",
+    "status": {
+      "aprobado": "Aprobado",
+      "observado": "Observado",
+      "rechazado": "Rechazado"
+    },
+    "levels": {
+      "Inicial": "Inicial",
+      "Intermedio": "Intermedio",
+      "Avanzado": "Avanzado",
+      "Excelente": "Excelente"
+    }
+  },
+  "pattern": {
+    "title": "Documento Patrón Institucional",
+    "description": "Configura la estructura y rúbricas esperadas para cada programa académico.",
+    "sections": "Secciones Requeridas",
+    "rubric": "Rúbrica de Evaluación",
+    "update": "Actualizar Plantilla",
+    "updated": "Documento Patrón actualizado exitosamente"
+  },
+  "bulk": {
+    "title": "Procesamiento por Lotes",
+    "description": "Selecciona múltiples avances pendientes para procesar con Grok-IA en paralelo.",
+    "processSelected": "Procesar Avances Seleccionados",
+    "processing": "Procesando lote con Grok-IA...",
+    "success": "avances analizados exitosamente"
+  },
+  "reports": {
+    "title": "Reportes y Estadísticas",
+    "description": "Genera reportes detallados y exporta datos.",
+    "exportAll": "Exportar Todos los Datos (CSV)",
+    "exportPDF": "Exportar Reporte PDF"
+  },
+  "users": {
+    "title": "Gestión de Usuarios",
+    "description": "Administra estudiantes, asesores y permisos.",
+    "assignAdvisor": "Asignar Asesor"
+  },
+  "analysis": {
+    "stages": {
+      "extracting": "Extrayendo texto y metadatos...",
+      "segmenting": "Segmentando secciones...",
+      "embeddings": "Generando embeddings...",
+      "comparing": "Comparando contra Documento Patrón...",
+      "reasoning": "Ejecutando razonamiento con Grok-4...",
+      "validating": "Validando rúbrica y generando retroalimentación...",
+      "completed": "Análisis completado. Listo para revisión humana."
+    }
+  },
+  "findings": {
+    "missingSection": "Sección obligatoria no detectada",
+    "missingSectionDesc": "La sección obligatoria \"{section}\" no fue detectada o está insuficientemente desarrollada.",
+    "missingSectionInstruction": "Agrega una sección clara titulada \"{section}\" con los elementos estándar.",
+    "coherence": "Los objetivos y metodología están presentes, pero los resultados no responden directamente a los objetivos planteados.",
+    "coherenceInstruction": "Asegúrate de que cada objetivo específico tenga su correspondiente apartado de resultados con datos o evidencia clara.",
+    "citations": "Solo se detectaron {count} citas en formato (Autor, año). Se requieren al menos 8-12 para un avance de este nivel.",
+    "citationsInstruction": "Integra citas recientes (2020-2026) de fuentes indexadas. Usa APA 7ma edición consistentemente.",
+    "vagueLanguage": "Uso excesivo de lenguaje vago. La redacción puede mejorarse con conectores lógicos y vocabulario técnico.",
+    "vagueLanguageInstruction": "Reemplaza términos imprecisos por conceptos específicos del área. Utiliza conectores para mejorar la fluidez argumentativa.",
+    "insufficientLength": "Extensión insuficiente ({wordCount} palabras). Un avance de tesis de maestría requiere mínimo 2,500-4,000 palabras por capítulo.",
+    "insufficientLengthInstruction": "Profundiza en el análisis crítico de la literatura y en la discusión de los hallazgos. Agrega subsecciones con mayor detalle teórico-empírico."
+  },
+  "strengths": {
+    "excellentStructure": "Excelente estructura general y presencia de secciones clave.",
+    "goodCoherence": "Buena articulación entre objetivos y metodología.",
+    "goodCitations": "Uso adecuado de citas que fortalecen la argumentación.",
+    "academicLanguage": "Lenguaje académico fluido con conectores lógicos apropiados.",
+    "promising": "El documento muestra un avance inicial prometedor con potencial de mejora significativa."
+  },
+  "recommendations": {
+    "completeSections": "Prioriza completar las secciones faltantes antes de avanzar a la siguiente versión.",
+    "consultPattern": "Consulta el Documento Patrón Institucional para alineación exacta de formato y extensión.",
+    "useZotero": "Recomendamos revisar las fuentes bibliográficas con herramientas como Zotero o Mendeley.",
+    "addImplications": "Considera agregar un apartado de implicaciones prácticas y futuras líneas de investigación.",
+    "meetingSuggestion": "Se sugiere una reunión con tu asesor para alinear expectativas antes de la próxima entrega."
+  },
+  "notifications": {
+    "analysisCompleted": "Análisis completado",
+    "analysisCompletedDesc": "Avance procesado con éxito",
+    "lowScore": "Bajo cumplimiento IA",
+    "lowScoreDesc": "Avance requiere atención urgente",
+    "reviewSaved": "Revisión guardada exitosamente",
+    "reviewSavedDesc": "Estado actualizado a: {status}",
+    "congratulations": "¡Felicidades!",
+    "congratulationsDesc": "El estudiante ha sido notificado de la aprobación."
+  },
+  "toast": {
+    "roleChanged": "Cambiado a rol: {role}",
+    "roleChangedDesc": "La interfaz se ha adaptado automáticamente",
+    "templateUpdated": "Documento Patrón actualizado",
+    "templateUpdatedDesc": "Los cambios se aplicarán a partir del próximo análisis",
+    "batchProcessing": "Procesando lote con Grok-IA...",
+    "batchSuccess": "{count} avances analizados exitosamente",
+    "pdfGenerated": "PDF generado",
+    "pdfGeneratedDesc": "El acta oficial ha sido descargada",
+    "lastSync": "Última sincronización"
+  }
+}

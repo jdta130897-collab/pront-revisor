@@ -1,0 +1,188 @@
+// PRONT Revisor - Real Backend Schema
+// Aligned with the requirements in prompt_sistema_revision_tesis.md
+
+generator client {
+  provider = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+  // For local development:
+  // url      = env("DATABASE_URL")
+  // For production (recommended):
+  // url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")  // For migrations if using connection pooling
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  password      String    // Hashed with bcrypt
+  role          String    @default("estudiante") // estudiante | asesor | coordinador | admin
+  avatar        String?
+  program       String?
+  orcid         String?   @unique // ORCID iD for academic identity verification (0000-0000-0000-0000)
+  // Hierarchy: estudiantes point to their asesor
+  advisorId              String?
+  advisor                User?     @relation("StudentAdvisor", fields: [advisorId], references: [id])
+  students               User[]    @relation("StudentAdvisor")
+  advisorAssignedManually Boolean? @default(false)  // false = elegido en registro, true = reasignado por admin
+
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  advances      Advance[]
+  advisedAdvances Advance[] @relation("AdvisorAdvances")
+}
+
+// Auth.js required models (for future providers + credentials)
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Advance {
+  id            String   @id @default(cuid())
+  title         String
+  fileName      String
+  fileType      String   // pdf | docx | txt
+  filePath      String?  // Path to uploaded file (local ./uploads in dev, or Railway Volume path in prod e.g. /data/uploads)
+  fileUrl       String?  // Optional - only if you add public file hosting later
+  version       Int      @default(1)
+  status        String   @default("pendiente") // pendiente | analisis_ia | en_revision | observado | aprobado | rechazado
+  studentId     String
+  studentName   String
+  advisor       String?
+  advisorId     String?           // Real relation for filtering by advisor
+  program       String?
+  uploadDate    DateTime @default(now())
+  processedAt   DateTime?
+  content       String? // Extracted text (can be large)
+
+  // Scores
+  iaScore       Float    @default(0)     // Academic quality (from IA)
+  humanScore    Float?                   // Human reviewer adjusted score
+  finalScore    Float?                   // Final combined / displayed score (used for student note /20)
+
+  user          User     @relation(fields: [studentId], references: [id])
+  advisorUser   User?    @relation("AdvisorAdvances", fields: [advisorId], references: [id])
+  academicReport AcademicReport?
+  originalityReport OriginalityReport?
+  humanReviews    HumanReview[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model AcademicReport {
+  id             String   @id @default(cuid())
+  advanceId      String   @unique
+  overallScore   Float
+  structureScore Float
+  contentScore   Float
+  formScore      Float
+  originalityScore Float
+  note           Float
+  summary        String
+  estimatedLevel String
+  processedAt    DateTime @default(now())
+
+  // New: Which engine actually performed the analysis
+  analysisProvider String?   // e.g. "grok-4-real", "gemini", "high-quality-simulator"
+
+  findings       Json     // Array of IAFinding
+  strengths      Json
+  recommendations Json
+
+  advance        Advance  @relation(fields: [advanceId], references: [id], onDelete: Cascade)
+}
+
+model OriginalityReport {
+  id                 String   @id @default(cuid())
+  advanceId          String   @unique
+  similarityScore    Float
+  aiContentScore     Float
+  aiDetectionLabel   String   // human | mixed | ai_generated
+  totalSourcesFound  Int
+  processedAt        DateTime @default(now())
+  detectionMethod    String   @default("simulated")
+
+  advance            Advance  @relation(fields: [advanceId], references: [id], onDelete: Cascade)
+  sources            MatchedSource[]
+  highlightedSections HighlightedSection[]
+}
+
+model MatchedSource {
+  id                 String   @id @default(cuid())
+  originalityReportId String
+  title              String
+  url                String?
+  similarity         Float
+  sourceType         String   // web | academic | repository | student_paper
+
+  report             OriginalityReport @relation(fields: [originalityReportId], references: [id], onDelete: Cascade)
+}
+
+model HighlightedSection {
+  id                 String   @id @default(cuid())
+  originalityReportId String
+  text               String
+  startIndex         Int
+  endIndex           Int
+  similarityScore    Float
+  type               String   // plagiarism | ai_generated | paraphrased
+  sourceId           String?
+
+  report             OriginalityReport @relation(fields: [originalityReportId], references: [id], onDelete: Cascade)
+}
+
+model HumanReview {
+  id            String   @id @default(cuid())
+  advanceId     String
+  reviewerId    String
+  reviewerName  String
+  comments      String
+  adjustedScore Float?
+  status        String   // aprobado | observado | rechazado
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  advance       Advance  @relation(fields: [advanceId], references: [id], onDelete: Cascade)
+
+  @@index([advanceId, createdAt])
+}
