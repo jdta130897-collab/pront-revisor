@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import * as pdfModule from 'pdf-parse';
+import { extractPdfText } from '@/lib/pdf';
 import mammoth from 'mammoth';
-
-const pdfParse = (pdfModule as any).default || pdfModule;
 
 // Force Node.js runtime (required for pdf-parse and mammoth)
 export const runtime = 'nodejs';
@@ -25,11 +23,13 @@ export async function POST(request: NextRequest) {
 
     let extractedText = '';
     let fileType: 'pdf' | 'docx' | 'txt' = 'txt';
+    let pages: number | undefined;
 
     if (fileName.endsWith('.pdf')) {
       fileType = 'pdf';
-      const pdfData = await pdfParse(buffer);
+      const pdfData = await extractPdfText(buffer);
       extractedText = pdfData.text || '';
+      pages = pdfData.pages;
     } else if (fileName.endsWith('.docx')) {
       fileType = 'docx';
       const result = await mammoth.extractRawText({ buffer });
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       text: extractedText,
       // Useful metadata for future features
       metadata: {
-        pages: fileType === 'pdf' ? (await pdfParse(buffer)).numpages : undefined,
+        pages,
       },
     });
   } catch (error: any) {

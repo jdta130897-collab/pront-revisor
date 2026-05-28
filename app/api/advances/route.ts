@@ -4,6 +4,7 @@ import { defaultAnalysisOrchestrator } from '@/lib/analyzers';
 import { auth } from '@/lib/auth';
 import { writeFile } from 'fs/promises';
 import path from 'path';
+import { extractPdfText } from '@/lib/pdf';
 
 // Force Node.js runtime (pdf-parse, mammoth and heavy analysis require it)
 export const runtime = 'nodejs';
@@ -40,9 +41,7 @@ export async function POST(request: NextRequest) {
     const fileName = file.name.toLowerCase();
 
     if (fileName.endsWith('.pdf')) {
-      const pdfModule = await import('pdf-parse');
-      const pdfParse = (pdfModule as any).default || pdfModule;
-      const pdfData = await pdfParse(buffer);
+      const pdfData = await extractPdfText(buffer);
       content = pdfData.text || '';
     } else if (fileName.endsWith('.docx')) {
       const mammothModule = await import('mammoth');

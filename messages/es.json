@@ -34,7 +34,8 @@
     "loading": "Procesando...",
     "success": "Éxito",
     "error": "Error",
-    "warning": "Advertencia"
+    "warning": "Advertencia",
+    "lastSync": "Ultima sincronizacion"
   },
   "dashboard": {
     "title": "Panel de Control",

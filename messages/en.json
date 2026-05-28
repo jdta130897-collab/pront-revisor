@@ -34,7 +34,8 @@
     "loading": "Processing...",
     "success": "Success",
     "error": "Error",
-    "warning": "Warning"
+    "warning": "Warning",
+    "lastSync": "Last synchronization"
   },
   "dashboard": {
     "title": "Control Panel",
